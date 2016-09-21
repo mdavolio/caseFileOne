@@ -61,6 +61,9 @@ wardDemo_comb <- join(wardWell_subset,wardDemo_subset, by = 'WARD')
 #Join demographic data with  crime data
 ward_crime <- join(crime.train , wardDemo_comb, by = 'WARD' , type = "left")
 
+#Add demographic data
+ward_crime_2016 <- data.frame(join(crime2016, wardDemo_comb, by = 'WARD' , type = "left"))
+
 # Shapefile creation and projection
 dsn <-"Ward__2012"
 shapefile <- "Ward__2012"
@@ -85,18 +88,31 @@ ward_demoe.group <- crime.train %>%
   group_by(WARD) %>%
   summarise(count = n())
 
-# Linear regression doesn't work in this type of data
-lm.model <- lm(Totcrime~PctPoorPersons_2010_14+PctWhiteNonHispBridge_2010+
-  PctUnemployed_2010_14,data=)#PctBlackNonHispBridge_2010+PctWhiteNonHispBridge_2010,data=)
 
-
-
-
-
-
-
-
-
+#Crime Data - Turn Burglary into binary variable 
+# assault_crime <- ward_crime
+# assault_crime$`ASSAULT` <- ifelse(ward_crime$OFFENSE == 'ASSAULT W/DANGEROUS WEAPON', 1, 0)
+# burglary_crime <- ward_crime
+# burglary_crime$`BURGLARY` <- ifelse(ward_crime$OFFENSE == 'BURGLARY', 1, 0)
+# homicide_crime <- ward_crime
+# homicide_crime$`HOMICIDE` <- ifelse(ward_crime$OFFENSE == 'HOMICIDE', 1, 0)
+# 
+# burglaryLog_Reg<- glm(BURGLARY ~ wardWellBeing.PctPoorPersons_2010_14 + 
+#                      wardWellBeing.PctUnemployed_2010_14 + wardWellBeing.AvgFamilyIncAdj_2010_14, 
+#                    data = burglary_crime, family = "binomial")
+# 
+# assaultLog_Reg<- glm(ASSAULT ~ wardWellBeing.PctPoorPersons_2010_14 + 
+#                         wardWellBeing.PctUnemployed_2010_14 + wardWellBeing.AvgFamilyIncAdj_2010_14, 
+#                       data = assault_crime, family = "binomial")
+# homicideLog_Reg<- glm(HOMICIDE ~ wardWellBeing.PctPoorPersons_2010_14 + 
+#                        wardWellBeing.PctUnemployed_2010_14 + wardWellBeing.AvgFamilyIncAdj_2010_14, 
+#                      data = homicide_crime, family = "binomial")
+# 
+# 
+# 
+# ward_crime_2016$Burglary <- predict(burglaryLog_Reg, newdata = ward_crime_2016, type="response")
+# ward_crime_2016$'ASSAULT W/DANGEROUS WEAPON' <- predict(assaultLog_Reg, newdata = ward_crime_2016, type="response")
+# ward_crime_2016$HOMICIDE <- predict(homicideLog_Reg, newdata = ward_crime_2016, type="response")
 
 
 # Crime Locations 2016
