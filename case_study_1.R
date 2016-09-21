@@ -26,6 +26,10 @@ proj4string(dcBorder) <- "+init=epsg:4326"
 Border <- spTransform(dcBorder, CRS("+init=epsg:4326"))
 plot(dcBorder)
 
+crswgs84=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84")
+wgs<-"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
+sp <- spTransform(dc, crswgs84)
+
 # get color palette for heat map
 palette.function = colorRampPalette(rev(brewer.pal(11,'Spectral')))
 heat.colors = palette.function(32)
@@ -46,5 +50,5 @@ streetCams[, c('Long', 'Lat')] <- sapply(streetCams[, c('Long', 'Lat')], as.fact
 streetCamsLocation <- as.data.frame(subset(streetCams, select = c(('Long'), ('Lat')))) %>%
   filter('Lat' > 0) # NEED TO REMOVE ZEROS?????
 plot(streetCamsLocation)
-                                    
-                                    
+
+filtered = streetCams[streetCams$LATITUDE != 0,]
