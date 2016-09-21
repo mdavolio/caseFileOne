@@ -21,10 +21,11 @@ metroBus <- read_csv('DataSets/Metro_Bus_Stops.csv')
 metroStations <- read_csv('DataSets/Metro_Stations_Regional.csv')
 
 # Shapefile
-dcBorder <- readShapeSpatial('DataSets/district_of_columbia_administrative.shp')
-proj4string(dcBorder) <- "+init=epsg:4326"
-Border <- spTransform(dcBorder, CRS("+init=epsg:4326"))
-plot(dcBorder)
+dsn <-"Ward__2012"
+shapefile <- "Ward__2012"
+dc<- readOGR(dsn,layer = shapefile)
+summary(dc)
+plot(dc, add = T)
 
 crswgs84=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84")
 wgs<-"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
